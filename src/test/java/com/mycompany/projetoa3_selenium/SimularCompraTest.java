@@ -87,20 +87,30 @@ public class SimularCompraTest {
         driver.findElement(By.id("add-to-cart-sauce-labs-fleece-jacket")).click();
         pause(1000);
 
-
         driver.findElement(By.className("shopping_cart_link")).click();
         pause(2000);
 
-        assertTrue(driver.getPageSource().contains("Sauce Labs Backpack"), "Produto deveria estar no carrinho");
+
+        driver.findElement(By.id("remove-sauce-labs-backpack")).click();
+        pause(2000);
+        driver.findElement(By.id("remove-sauce-labs-onesie")).click();
+        pause(2000);
+
+
+        String pageSource = driver.getPageSource();
+        assertFalse(pageSource.contains("Sauce Labs Backpack"), "Backpack deveria ter sido removido");
+        assertFalse(pageSource.contains("Sauce Labs Onesie"), "Onesie deveria ter sido removido");
 
         driver.findElement(By.id("checkout")).click();
         pause(1000);
+
         driver.findElement(By.id("first-name")).sendKeys("José");
         pause(1500);
         driver.findElement(By.id("last-name")).sendKeys("Mirim");
         pause(1500);
         driver.findElement(By.id("postal-code")).sendKeys("Anhembi Morumbi");
         pause(1000);
+
         driver.findElement(By.id("continue")).click();
         pause(1000);
         driver.findElement(By.id("finish")).click();
