@@ -35,7 +35,7 @@ public class SimularCompraTest {
 
     @Test
     @Order(1)
-    public void testLoginInvalido() {
+    public void testLoginComDadosInvalido() {
         driver.get("https://www.saucedemo.com/");
         pause(2000);
 
@@ -52,8 +52,52 @@ public class SimularCompraTest {
         assertTrue(erro.isDisplayed(), "Mensagem de erro deveria ser exibida com login inválido");
     }
 
+
     @Test
     @Order(2)
+    public void testLoginSenhaInvalidaEUsuarioCorreto() {
+        driver.get("https://www.saucedemo.com/");
+        pause(2000);
+
+        driver.findElement(By.name("user-name")).sendKeys("standard_user");
+        pause(2000);
+
+        driver.findElement(By.name("password")).sendKeys("Estou inserindo qualquer coisa");
+        pause(2000);
+
+        driver.findElement(By.className("submit-button")).click();
+        pause(2000);
+
+        WebElement erro = driver.findElement(By.cssSelector("[data-test='error']"));
+        assertTrue(erro.isDisplayed(), "Mensagem de erro deveria ser exibida com login inválido");
+    }
+
+
+
+    @Test
+    @Order(3)
+    public void testLoginSenhaValidaEUsuarioIncorreto() {
+        driver.get("https://www.saucedemo.com/");
+        pause(2000);
+
+        driver.findElement(By.name("user-name")).sendKeys("Usuário qualquer acessando");
+        pause(2000);
+
+        driver.findElement(By.name("password")).sendKeys("secret_sauce");
+        pause(2000);
+
+        driver.findElement(By.className("submit-button")).click();
+        pause(2000);
+
+        WebElement erro = driver.findElement(By.cssSelector("[data-test='error']"));
+        assertTrue(erro.isDisplayed(), "Mensagem de erro deveria ser exibida com login inválido");
+
+    }
+
+
+
+    @Test
+    @Order(4)
     public void testLoginValidoECompra() {
         driver.get("https://www.saucedemo.com/");
         pause(2000);
